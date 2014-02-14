@@ -4,7 +4,7 @@ describe "User pages" do
 
   subject { page }
 
-  describe "edit" do
+ describe "edit" do
     let(:user) { FactoryGirl.create(:user)}
     before do
       sign_in user
@@ -22,7 +22,7 @@ describe "User pages" do
 
       it { should have_content('error')}
     end
-  end
+  end 
 
   describe "signup page" do
     before { visit signup_path }
