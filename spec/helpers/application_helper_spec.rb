@@ -7,7 +7,7 @@ require 'spec_helper'
       end
 
       it "should include the base title" do
-        expect(full_title("foo")).to match(/^Sample App/)
+        expect(full_title("foo")).to match(/Sample App/)
       end
 
       it "should not include a bar for the home page" do
