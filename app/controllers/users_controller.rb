@@ -27,6 +27,20 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
+  def following
+    @title = "Following"
+    @user = User.find(params[:id])
+    @users = @user.followed_users.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
+  def followers
+    @title = "Followers"
+    @user = User.find(params[:id])
+    @users = @user.followers.paginate(page: params[:page])
+    render 'show_follow'
+  end
+
   def create
     @user = User.new(user_params)
 
@@ -55,13 +69,6 @@ class UsersController < ApplicationController
       # adding it will cause tests to fail
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation)
-    end
-
-    def signed_in_user
-      unless signed_in?
-        store_location
-        redirect_to signin_url, notice: "Please sign in." unless signed_in?
-      end
     end
 
     def correct_user

@@ -7,6 +7,25 @@ describe "Micropost pages" do
   let(:user) { FactoryGirl.create(:user) }
   before { sign_in user }
 
+  describe "pagination" do
+  after(:all) { user.microposts.delete_all unless user.microposts.nil? }
+  it "should paginate the feed" do
+     40.times { FactoryGirl.create(:micropost, user: user) }
+    end
+  end
+
+  describe "display single micropost" do
+  	let!(:m1) { FactoryGirl.create(:micropost, user: user, content: "foo")}
+  	before { visit root_path }
+
+    it { should have_content('1 micropost')}
+
+    describe "display two microposts" do
+	  	let!(:m2) { FactoryGirl.create(:micropost, user: user, content: "foo")}
+    	before { visit root_path}
+	    it { should have_content('2 microposts')}
+    end
+  end
 
   describe "micropost destruction" do
   	before { FactoryGirl.create(:micropost, user: user)}

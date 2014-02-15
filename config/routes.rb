@@ -16,6 +16,15 @@ SampleApp::Application.routes.draw do
   match '/signin', to: 'sessions#new', via: 'get'
   match '/signout', to: 'sessions#destroy', via: 'delete'
 
+  # microposts
   resources :microposts, only: [:create, :destroy]
+
+  # followers
+  resources :relationships, only: [:create, :destroy]
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
 
 end
