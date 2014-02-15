@@ -17,9 +17,11 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def destroy
+    # make sure we dont destroy ourselves
     User.find(params[:id]).destroy
     flash[:success] = "User deleted."
     redirect_to users_url
@@ -49,6 +51,8 @@ class UsersController < ApplicationController
 
   private
     def user_params
+      # note that :admin is not included here.
+      # adding it will cause tests to fail
       params.require(:user).permit(:name, :email, :password,
                                    :password_confirmation)
     end
